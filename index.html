@@ -312,8 +312,12 @@ h2{font-size:clamp(1.65rem,3vw,2.55rem);line-height:1.08;margin:18px 0 13px}
       <div class="voucher-code">PERSÖNLICHER REISEGUTSCHEIN</div>
       <h3>Für Lena – von Marcus ♥</h3>
       <p>Drei Nächte am Bodensee: aktiv sein, wandern, Kaffee trinken, einen Gin genießen und gemeinsam am Wasser entspannen.</p>
-      <button class="primary reveal-btn" id="letterBtn">Persönlichen Brief öffnen ♥</button>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px">
+        <button class="primary reveal-btn" id="letterBtn">Persönlichen Brief öffnen ♥</button>
+        <button class="secondary reveal-btn" id="mailBtn">Marcus über das erfolgreiche Lösen informieren ♥</button>
+      </div>
     </div>
+    <div id="mailStatus" style="margin:0 24px 18px;text-align:center;font-weight:850;color:#7f3e48"></div>
     <div class="letter-wrap hidden" id="letterWrap">
       <div class="letter">
         <p>Liebe Lena,</p>
@@ -536,6 +540,20 @@ $("jokerBtn").onclick=()=>{
 };
 $("soundBtn").onclick=()=>{state.sound=!state.sound;save();$("soundBtn").textContent=state.sound?"🔊":"🔇";if(state.sound)tone("ok")};
 $("interludeBtn").onclick=()=>{$("interlude").classList.add("hidden")};
+$("mailBtn").onclick=()=>{
+ const subject="Rätsel erfolgreich gelöst ♥";
+ const body=`Lieber Marcus,
+
+ich habe das Rätsel gelöst und weiß jetzt, wohin unsere Reise geht.
+
+Ich freue mich auf schöne Tage mit dir!
+
+Deine Lena ♥`;
+ const url="mailto:marcus@stars.ms?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);
+ $("mailStatus").textContent="Deine Mail-App wird geöffnet. Bitte die Nachricht dort noch absenden.";
+ window.location.href=url;
+};
+
 $("letterBtn").onclick=()=>{$("letterWrap").classList.toggle("hidden");$("letterBtn").textContent=$("letterWrap").classList.contains("hidden")?"Persönlichen Brief öffnen ♥":"Brief wieder schließen";floatingHearts(18,5000)};
 setInterval(updateCountdown,60000);
 
